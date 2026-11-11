@@ -1,0 +1,1 @@
+import type { Metadata } from 'next';import './styles.css';export const metadata:Metadata={title:'RENASER Masajes | Reservá tu turno',description:'Reservá tu sesión de masajes en RENASER'};export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="es"><body>{children}</body></html>}
