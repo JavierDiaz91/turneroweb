@@ -1,0 +1,1 @@
+import AdminDashboard from './dashboard';export const metadata={title:'Administración | RENASER'};export default function AdminPage(){return <main><header className="hero"><h1 className="brand">RENASER</h1><p className="subtitle">administración</p></header><AdminDashboard/></main>}
