@@ -67,3 +67,6 @@
 .admin-login{max-width:470px;margin:auto;text-align:center;padding:38px}.admin-login-symbol{font-size:36px;color:#829e84}.admin-login .field{text-align:left}
 @media(max-width:760px){.admin-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-agenda{padding:20px}.admin-booking{grid-template-columns:95px minmax(0,1fr);gap:12px}.admin-booking-time strong{font-size:23px}.admin-booking-heading{align-items:flex-start;flex-direction:column}.admin-editor{grid-template-columns:1fr}}
 @media(max-width:440px){.admin-top{align-items:flex-start}.admin-top h2{font-size:32px}.admin-outline{padding:10px;font-size:12px}.admin-metric{padding:15px}.admin-metric>strong{font-size:28px}.admin-agenda-head{align-items:flex-start;flex-direction:column}.admin-booking{grid-template-columns:1fr}.admin-booking-time{border-right:0;border-bottom:1px solid #e2eae0;padding-bottom:12px;flex-direction:row;align-items:baseline;gap:12px}.admin-booking-heading{flex-direction:row;flex-wrap:wrap}}
+
+/* Preserve correct Spanish lowercase particles in formatted dates */
+.admin-agenda-head h3{text-transform:none}
