@@ -1,6 +1,6 @@
+'use client';
 import AdminSettings from './settings';
 import ManualBooking from './manual-booking';
-'use client';
 import {useCallback,useEffect,useMemo,useState} from 'react';
 type Appointment={id:number|string;full_name:string;phone:string;service_name:string;starts_at:string;ends_at:string;status:string;payment_status:string;price_ars:number};
 const TZ='America/Argentina/Buenos_Aires';
