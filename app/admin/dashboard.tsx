@@ -1,6 +1,6 @@
 'use client';
 import {useCallback,useEffect,useMemo,useState} from 'react';
-type Appointment={id:number;full_name:string;phone:string;service_name:string;starts_at:string;ends_at:string;status:string;payment_status:string;price_ars:number};
+type Appointment={id:number|string;full_name:string;phone:string;service_name:string;starts_at:string;ends_at:string;status:string;payment_status:string;price_ars:number};
 const TZ='America/Argentina/Buenos_Aires';
 const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
 const clock=(iso:string)=>new Intl.DateTimeFormat('es-AR',{timeZone:TZ,hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(iso));
@@ -9,14 +9,14 @@ const money=(n:number)=>'$ '+n.toLocaleString('es-AR');
 const shift=(date:string,days:number)=>{const d=new Date(date+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+days);return d.toISOString().slice(0,10)};
 const statusText:Record<string,string>={confirmed:'Confirmado',completed:'Realizado',cancelled:'Cancelado',no_show:'No asistió'};
 export default function AdminDashboard(){
- const [authenticated,setAuthenticated]=useState(false),[password,setPassword]=useState(''),[date,setDate]=useState(today()),[rows,setRows]=useState<Appointment[]>([]),[error,setError]=useState(''),[busy,setBusy]=useState(false),[loading,setLoading]=useState(true),[filter,setFilter]=useState('all'),[editing,setEditing]=useState<number|null>(null);
+ const [authenticated,setAuthenticated]=useState(false),[password,setPassword]=useState(''),[date,setDate]=useState(today()),[rows,setRows]=useState<Appointment[]>([]),[error,setError]=useState(''),[busy,setBusy]=useState(false),[loading,setLoading]=useState(true),[filter,setFilter]=useState('all'),[editing,setEditing]=useState<number|string|null>(null);
  const load=useCallback(async()=>{setLoading(true);try{const r=await fetch('/api/admin/appointments?date='+date,{cache:'no-store'});if(r.status===401){setAuthenticated(false);setRows([]);return}const data=await r.json();if(r.ok){setAuthenticated(true);setRows(data);setError('')}else setError(data.error||'Error consultando agenda')}catch{setError('No se pudo conectar con la agenda')}finally{setLoading(false)}},[date]);
  useEffect(()=>{void load()},[load]);
  const active=rows.filter(a=>a.status!=='cancelled');
  const counts={total:active.length,confirmed:active.filter(a=>a.status==='confirmed').length,completed:active.filter(a=>a.status==='completed').length,paid:active.filter(a=>a.payment_status==='paid').reduce((sum,a)=>sum+a.price_ars,0)};
  const visible=useMemo(()=>rows.filter(a=>filter==='all'||a.status===filter),[rows,filter]);
  async function login(e:React.FormEvent){e.preventDefault();setBusy(true);setError('');try{const r=await fetch('/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password})});const d=await r.json();if(r.ok){setPassword('');setAuthenticated(true);void load()}else setError(d.error||'Error de acceso')}catch{setError('No se pudo iniciar sesión')}finally{setBusy(false)}}
- async function update(id:number,changes:{status?:string;payment_status?:string}){setBusy(true);setError('');try{const r=await fetch('/api/admin/appointments',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,...changes})});const d=await r.json();if(!r.ok)throw Error(d.error||'Error al actualizar');setEditing(null);await load()}catch(e){setError(e instanceof Error?e.message:'Error al actualizar')}finally{setBusy(false)}}
+ async function update(id:number|string,changes:{status?:string;payment_status?:string}){setBusy(true);setError('');try{const r=await fetch('/api/admin/appointments',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,...changes})});const d=await r.json();if(!r.ok)throw Error(d.error||'Error al actualizar');setEditing(null);await load()}catch(e){setError(e instanceof Error?e.message:'Error al actualizar')}finally{setBusy(false)}}
  async function logout(){await fetch('/api/admin/logout',{method:'POST'});setAuthenticated(false);setRows([]);setEditing(null)}
  if(!authenticated)return <section className="panel admin-login"><div className="admin-login-symbol">✿</div><h2>Bienvenida a RENASER</h2><p className="intro">Ingresá a tu espacio privado para organizar tus sesiones.</p><form onSubmit={login}><label className="field">Contraseña<input type="password" autoComplete="current-password" required value={password} onChange={e=>setPassword(e.target.value)} placeholder="Ingresá tu contraseña"/></label><button className="primary" disabled={busy}>{busy?'Ingresando…':'Ingresar a mi agenda'}</button></form>{error&&<p className="message error" role="alert">{error}</p>}</section>;
  return <section className="admin-workspace">
