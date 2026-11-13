@@ -78,3 +78,37 @@
 .admin-settings-form{border:1px solid #dbe6d9;background:#f8faf7;border-radius:16px;padding:22px;margin:20px 0;display:grid;gap:16px}.admin-settings-form h4{font:400 24px Georgia,serif;margin:0}.admin-settings-form label{display:grid;gap:8px;color:#607563}.admin-settings-form input:not([type=checkbox]),.admin-settings-form textarea,.admin-hours-row input[type=time]{width:100%;border:1px solid #c7d8c8;border-radius:10px;padding:12px;background:white;color:#354d3c;font:inherit}.admin-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.admin-settings-form .admin-check,.admin-check{display:flex;align-items:center;gap:10px}.admin-check input{accent-color:#5d8066}.admin-form-actions{display:flex;gap:10px;justify-content:flex-end}
 .admin-hours-row{display:grid;grid-template-columns:minmax(125px,1fr) 135px 20px 135px auto;align-items:center;gap:12px;padding:14px;border:1px solid #e0e9de;border-radius:12px}.admin-hours-row>span{text-align:center;color:#839785}
 @media(max-width:750px){.admin-hours-row{grid-template-columns:1fr 1fr;gap:10px}.admin-hours-row .admin-check{grid-column:1/-1}.admin-hours-row>span{display:none}.admin-hours-row button{grid-column:1/-1}.admin-setting-card{align-items:flex-start;flex-direction:column}.admin-form-grid{grid-template-columns:1fr}}
+
+/* Mobile-first public booking refinements */
+.reservation-heading h2{margin:0 0 8px}
+.reservation-heading .intro{margin:0 0 16px}
+.reservation-step{display:flex;align-items:center;gap:11px;margin:24px 0 14px}
+.reservation-step span{display:grid;place-items:center;flex:0 0 29px;height:29px;border-radius:50%;background:#e2ebe0;color:#43684a;font-size:14px;font-weight:700}
+.reservation-step h3{font:400 23px Georgia,serif;color:#344d3c;margin:0}
+.reservation-cards{margin:12px 0 16px}
+.reservation-cards .service{display:flex;flex-direction:column;gap:8px;min-width:0}
+.reservation-cards .service h3{margin:0}
+.reservation-cards .service p{margin:0;min-height:0;flex:1}
+.reservation-service-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:5px}
+.reservation-selected{display:flex;justify-content:space-between;gap:12px;align-items:center;background:#f2f7f0;border:1px solid #dce7da;border-radius:12px;padding:12px 14px;font-size:14px;color:#49644e}
+.reservation-selected>strong{white-space:nowrap}
+.reservation-confirm-summary{margin:8px 0 12px}
+.reservation-subheading{font:400 21px Georgia,serif;margin:18px 0 12px;color:#344d3c}
+.reservation-panel .slot:disabled{background:#e7e9e6;border-color:#d5d9d4;color:#8b948c;cursor:not-allowed;opacity:.8}
+@media(max-width:640px){
+ .reservation-panel{padding:19px 16px}
+ .reservation-heading h2{font-size:clamp(26px,7vw,32px);line-height:1.15}
+ .reservation-heading .intro{font-size:14px;line-height:1.5}
+ .reservation-cards{gap:10px}
+ .reservation-cards .service{padding:14px 15px;border-radius:14px;gap:7px}
+ .reservation-cards .service h3{font-size:21px;line-height:1.18}
+ .reservation-cards .service p{font-size:13px;line-height:1.38}
+ .reservation-cards .service .price{font-size:19px}
+ .reservation-cards .service .meta{font-size:12px}
+ .reservation-step{margin:20px 0 10px}
+ .reservation-step h3{font-size:21px}
+ .reservation-panel .field{margin:12px 0}
+ .reservation-panel .slots{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .reservation-panel .slot{min-height:44px}
+ .reservation-selected{font-size:12px;flex-wrap:wrap}
+}
