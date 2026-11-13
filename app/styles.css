@@ -112,3 +112,47 @@
  .reservation-panel .slot{min-height:44px}
  .reservation-selected{font-size:12px;flex-wrap:wrap}
 }
+
+/* RENASER public booking visual refinement - scoped to avoid admin changes */
+body:has(.reservation-panel){background:radial-gradient(ellipse 65% 360px at 50% 0%,#e9eee5 0%,transparent 100%),#f7f4ee}
+body:has(.reservation-panel) main{max-width:1060px}
+body:has(.reservation-panel) .hero{padding:30px 0 32px}
+body:has(.reservation-panel) .hero .intro{max-width:540px;margin:18px auto 0;font-size:16px}
+body:has(.reservation-panel) .brand{color:#30483b;letter-spacing:.16em}
+.reservation-panel{background:linear-gradient(155deg,#fff 0%,#fdfefa 100%);border:1px solid #e1e7dc;box-shadow:0 18px 55px rgba(49,78,54,.075);border-radius:26px;padding:34px}
+.reservation-heading{padding-bottom:16px;border-bottom:1px solid #e7ece5}
+.reservation-heading h2{color:#30483b;font-size:clamp(29px,3.4vw,38px);letter-spacing:-.025em}
+.reservation-heading .intro{margin:8px 0 0;color:#728373}
+.reservation-panel .reservation-step{margin-top:26px}
+.reservation-panel .reservation-step span{background:#e3ede3;color:#426b50}
+.reservation-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0 18px}
+.reservation-cards .service{position:relative;min-height:172px;padding:23px 24px;border:1px solid #dfe8dd;border-radius:18px;background:#fff;box-shadow:0 4px 15px rgba(55,77,57,.025);transition:background .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease}
+.reservation-cards .service:hover{border-color:#9db6a0;box-shadow:0 9px 25px rgba(56,88,61,.09);transform:translateY(-2px)}
+.reservation-cards .service.selected{outline:none;border:2px solid #6f9277;background:linear-gradient(135deg,#f1f7f0,#f9fbf7);padding:22px 23px;box-shadow:0 8px 25px rgba(73,111,77,.09)}
+.reservation-cards .service.selected:after{content:"✓";position:absolute;top:16px;right:18px;color:#4d7958;font-size:16px;font-weight:700}
+.reservation-cards .service h3{font-size:clamp(22px,2.5vw,27px);padding-right:20px;color:#30483b}
+.reservation-cards .service p{max-width:390px;color:#6b7d70;font-size:14px;line-height:1.5}
+.reservation-cards .reservation-service-bottom{padding-top:12px;border-top:1px solid #edf0e9}
+.reservation-cards .service .price{font-size:23px;color:#365643}
+.reservation-selected{background:#edf5ec;border-color:#d6e6d6;padding:15px 18px;border-radius:14px}
+.reservation-panel .field input{min-height:48px}
+.reservation-panel .slot:not(:disabled):hover{background:#edf4ed;border-color:#668a6d}
+.reservation-panel .slot.selected:not(:disabled){background:#607f69;color:white}
+.reservation-panel .primary{transition:background .18s ease}
+.reservation-panel .primary:not(:disabled):hover{background:#4e6e58}
+@media(max-width:640px){
+ body:has(.reservation-panel) main{padding:14px 12px 45px}
+ body:has(.reservation-panel) .hero{padding:18px 0 25px}
+ .reservation-panel{padding:19px 16px;border-radius:18px}
+ .reservation-heading{padding-bottom:10px}
+ .reservation-cards{grid-template-columns:1fr;gap:10px}
+ .reservation-cards .service{min-height:0;padding:14px 15px;border-radius:14px}
+ .reservation-cards .service.selected{padding:13px 14px}
+ .reservation-cards .service h3{font-size:21px}
+ .reservation-cards .service p{font-size:13px}
+ .reservation-cards .reservation-service-bottom{padding-top:8px}
+ .reservation-cards .service .price{font-size:19px}
+ .reservation-cards .service.selected:after{top:12px;right:13px}
+ .reservation-selected{padding:12px 13px}
+}
+@media(prefers-reduced-motion:reduce){.reservation-cards .service,.reservation-panel .primary{transition:none}.reservation-cards .service:hover{transform:none}}
