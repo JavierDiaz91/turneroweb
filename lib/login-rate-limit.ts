@@ -2,7 +2,6 @@ import {createHmac} from 'node:crypto';
 import {pool} from './db';
 
 const MAX_FAILURES=5;
-const WINDOW_MINUTES=15;
 let initialized:Promise<void>|undefined;
 
 function ensureTable(){
@@ -34,7 +33,7 @@ export async function registerLoginFailure(identity:string){
  INSERT INTO admin_login_attempts(identity_hash,failures,window_started_at,blocked_until)
  VALUES($1,1,now(),NULL)
  ON CONFLICT(identity_hash) DO UPDATE SET
- failures=CASE WHEN admin_login_attempts.window_started_at < now()-interval '15 minutes'
+ failures=CASE WHEN (admin_login_attempts.window_started_at < now()-interval '15 minutes' OR (admin_login_attempts.blocked_until IS NOT NULL AND admin_login_attempts.blocked_until<=now()))
  THEN 1 ELSE admin_login_attempts.failures+1 END,
  window_started_at=CASE WHEN admin_login_attempts.window_started_at < now()-interval '15 minutes'
  THEN now() ELSE admin_login_attempts.window_started_at END,
