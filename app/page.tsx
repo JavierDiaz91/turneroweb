@@ -6,7 +6,6 @@ export default function Home(){
   <nav className="renaser-site-nav" aria-label="Navegación principal">
    <a className="renaser-home-link" href="/" aria-label="RENASER Masajes - volver al inicio">
     <Image src="/renaser-site-logo.webp" alt="" width={700} height={900} className="renaser-nav-logo" priority/>
-    <span className="renaser-nav-name">RENASER <small>masajes</small></span>
    </a>
    <a className="renaser-nav-book" href="#reservar">Reservar turno</a>
   </nav>
@@ -19,6 +18,6 @@ export default function Home(){
    </div>
   </header>
   <div id="reservar"><Reservation/></div>
-  <footer>RENASER Masajes · Reservas online · Pago presencial</footer>
+  <footer className="renaser-site-footer"><span>© {new Date().getFullYear()} RENASER Masajes · Reservas online · Pago presencial</span><span>Desarrollado por <a href="https://github.com/JavierDiaz91/porfolio-JD" target="_blank" rel="noopener noreferrer">Javier Díaz · Mi portfolio</a></span></footer>
  </main>
 }
