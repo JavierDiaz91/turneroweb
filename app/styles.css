@@ -158,13 +158,13 @@ body:has(.reservation-panel) .brand{color:#30483b;letter-spacing:.16em}
 @media(prefers-reduced-motion:reduce){.reservation-cards .service,.reservation-panel .primary{transition:none}.reservation-cards .service:hover{transform:none}}
 
 /* Original RENASER identity in public booking hero */
-body:has(.reservation-panel) .renaser-logo-hero{display:flex;flex-direction:column;align-items:center;gap:0;padding:15px 0 30px}
-.renaser-original-logo{display:block;width:min(260px,70vw);height:auto;object-fit:contain}
-.renaser-tagline{margin:2px 0 6px;color:#3b5947;font:italic 21px Georgia,serif;text-align:center}
+body:has(.reservation-panel) .renaser-logo-hero{display:flex;flex-direction:column;align-items:center;gap:0;padding:8px 0 12px}
+.renaser-original-logo{display:block;width:min(221px,70vw);height:auto;object-fit:contain}
+.renaser-tagline{margin:-5px 0 5px;color:#3b5947;font:italic 21px Georgia,serif;text-align:center}
 .renaser-hero-instruction{margin:0;color:#6e806f;font-size:15px;text-align:center;line-height:1.5}
 @media(max-width:640px){
- body:has(.reservation-panel) .renaser-logo-hero{padding:8px 0 20px}
- .renaser-original-logo{width:min(205px,65vw)}
- .renaser-tagline{font-size:18px;margin:0 0 6px}
+ body:has(.reservation-panel) .renaser-logo-hero{padding:4px 0 10px}
+ .renaser-original-logo{width:min(174px,65vw)}
+ .renaser-tagline{font-size:18px;margin:-4px 0 5px}
  .renaser-hero-instruction{font-size:13px;max-width:300px}
 }
