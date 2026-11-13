@@ -18,6 +18,6 @@ export default function Home(){
    </div>
   </header>
   <div id="reservar"><Reservation/></div>
-  <footer className="renaser-site-footer"><span>© {new Date().getFullYear()} RENASER Masajes · Reservas online · Pago presencial</span><span>Desarrollado por <a href="https://github.com/JavierDiaz91/porfolio-JD" target="_blank" rel="noopener noreferrer">Javier Díaz · Mi portfolio</a></span></footer>
+  <footer className="renaser-site-footer"><span>© {new Date().getFullYear()} RENASER Masajes · Reservas online · Pago presencial</span></footer>
  </main>
 }
