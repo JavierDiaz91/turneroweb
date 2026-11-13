@@ -242,3 +242,26 @@ body:has(.renaser-home) .renaser-home{max-width:1100px;padding-top:14px}
  .renaser-admin-page .admin-workspace{gap:15px}
  .renaser-admin-page .admin-top h2{font-size:clamp(30px,9vw,38px)}
 }
+
+/* Final mobile admin density and explicit session verification */
+.renaser-admin-page .admin-top{padding-top:0;padding-bottom:0}
+.renaser-admin-page .admin-top .admin-eyebrow{margin-bottom:4px}
+.renaser-admin-page .admin-top h2{margin:0 0 3px}
+.renaser-admin-page .admin-top .intro{margin:0}
+.renaser-admin-page .admin-workspace{gap:13px}
+.renaser-admin-page .admin-tabs{margin-top:0}
+.admin-verify-notice{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:14px 17px;border:1px solid #cbdcc9;background:#f0f5ed;border-radius:14px;color:#355441;font-size:14px;line-height:1.45}
+.admin-verify-notice button,.admin-verify-button{border:1px solid #719579;background:#fff;color:#355d42;border-radius:10px;padding:9px 13px;font-weight:650;cursor:pointer}
+.admin-verify-notice button:hover,.admin-verify-button:hover{background:#e4eee3}
+.admin-verify-notice button:focus-visible,.admin-verify-button:focus-visible{outline:3px solid #63866c;outline-offset:2px}
+.admin-verify-button{margin-right:10px}
+#admin-appointments-list{scroll-margin-top:16px}
+@media(max-width:640px){
+ .renaser-admin-page .admin-header{margin-bottom:4px}
+ .renaser-admin-page .admin-workspace{gap:11px}
+ .renaser-admin-page .admin-top .intro{line-height:1.35}
+ .renaser-admin-page .admin-tabs{gap:8px}
+ .renaser-admin-page .admin-tabs button{padding:10px 12px}
+ .admin-verify-notice{padding:12px;font-size:13px}
+ .admin-verify-button{margin-right:6px;padding:8px 10px;font-size:12px}
+}
