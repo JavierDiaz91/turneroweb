@@ -168,3 +168,38 @@ body:has(.reservation-panel) .renaser-logo-hero{display:flex;flex-direction:colu
  .renaser-tagline{font-size:18px;margin:-4px 0 5px}
  .renaser-hero-instruction{font-size:13px;max-width:300px}
 }
+
+/* RENASER public navigation and branded banner */
+body:has(.renaser-home){background:#f7f4ee}
+body:has(.renaser-home) .renaser-home{max-width:1100px;padding-top:14px}
+.renaser-site-nav{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:72px;margin-bottom:12px}
+.renaser-home-link{display:flex;align-items:center;gap:9px;text-decoration:none;color:#344e3d}
+.renaser-home-link:focus-visible,.renaser-nav-book:focus-visible,.renaser-banner-cta:focus-visible{outline:3px solid #63866c;outline-offset:4px}
+.renaser-nav-logo{width:53px;height:62px;object-fit:contain}
+.renaser-nav-name{font:400 19px Georgia,serif;letter-spacing:.11em;white-space:nowrap}
+.renaser-nav-name small{display:block;font:12px Arial,sans-serif;letter-spacing:.26em;text-align:center;color:#718573;margin-top:2px}
+.renaser-nav-book{color:#476c52;text-decoration:none;font-size:14px;font-weight:600;padding:10px 17px;border:1px solid #b6c9b7;border-radius:999px;background:#fff}
+.renaser-nav-book:hover{background:#eaf1e9}
+.renaser-banner{position:relative;isolation:isolate;overflow:hidden;min-height:290px;display:flex;align-items:center;background:linear-gradient(110deg,#eaf0e7,#f5f5ec 75%);border:1px solid #e0e9dc;border-radius:24px;padding:35px clamp(24px,6vw,70px);margin-bottom:18px}
+.renaser-banner:before{content:"";position:absolute;z-index:-1;right:4%;top:50%;transform:translateY(-50%);width:300px;height:390px;background:url('/renaser-site-logo.webp') center / contain no-repeat;opacity:.11;pointer-events:none}
+.renaser-banner-content{position:relative;z-index:1;max-width:620px}
+.renaser-banner-eyebrow{font-size:11px!important;font-weight:700;letter-spacing:.2em;color:#69866f!important;margin:0 0 14px!important}
+.renaser-banner h1{font:400 clamp(31px,4vw,49px)/1.13 Georgia,serif;letter-spacing:-.025em;color:#2f4b3a;margin:0 0 14px;max-width:510px}
+.renaser-banner-content>p:not(.renaser-banner-eyebrow){font-size:16px;line-height:1.6;color:#607b66;margin:0 0 24px}
+.renaser-banner-cta{display:inline-flex;align-items:center;gap:14px;text-decoration:none;background:#617f69;color:#fff;padding:13px 20px;border-radius:12px;font-size:14px;font-weight:700}
+.renaser-banner-cta:hover{background:#4d6e57}
+#reservar{scroll-margin-top:14px}
+@media(max-width:640px){
+ body:has(.renaser-home) .renaser-home{padding:8px 12px 42px}
+ .renaser-site-nav{min-height:57px;margin-bottom:10px;gap:10px}
+ .renaser-nav-logo{width:43px;height:49px}
+ .renaser-nav-name{font-size:15px}
+ .renaser-nav-name small{font-size:10px}
+ .renaser-nav-book{font-size:12px;padding:9px 11px}
+ .renaser-banner{min-height:230px;border-radius:18px;padding:24px 19px;margin-bottom:12px}
+ .renaser-banner:before{right:-55px;width:215px;height:290px;opacity:.075}
+ .renaser-banner-content{max-width:100%}
+ .renaser-banner h1{font-size:clamp(27px,8vw,35px);max-width:320px}
+ .renaser-banner-content>p:not(.renaser-banner-eyebrow){font-size:13px;max-width:260px;margin-bottom:17px}
+ .renaser-banner-cta{padding:11px 15px;font-size:13px}
+}
