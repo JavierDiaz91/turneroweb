@@ -12,7 +12,7 @@ export async function GET(req:NextRequest){
   if(!p.rowCount)return NextResponse.json({error:'Paciente no encontrado'},{status:404});
   const [record,notes]=await Promise.all([
    pool.query('SELECT * FROM patient_records WHERE patient_id=$1',[id]),
-   pool.query('SELECT id,session_date,treatment,observations,next_appointment FROM patient_session_notes WHERE patient_id=$1 ORDER BY session_date DESC,id DESC LIMIT 100',[id])
+   pool.query('SELECT n.id,n.session_date,n.treatment,n.observations,n.next_appointment,n.professional_id,p.full_name AS professional_name FROM patient_session_notes n LEFT JOIN professionals p ON p.id=n.professional_id WHERE n.patient_id=$1 ORDER BY n.session_date DESC,n.id DESC LIMIT 100',[id])
   ]);
   return NextResponse.json({patient:p.rows[0],record:record.rows[0]||null,notes:notes.rows},{headers:{'Cache-Control':'no-store'}});
  }catch(e){console.error('patient record read failed',e);return NextResponse.json({error:'No se pudo consultar la ficha'},{status:500})}
