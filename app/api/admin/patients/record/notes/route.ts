@@ -10,8 +10,11 @@ export async function POST(req:NextRequest){
  const date=d.session_date;
  if(typeof date!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(date))return NextResponse.json({error:'Fecha inválida'},{status:400});
  for(const k of ['treatment','observations','next_appointment'])if(typeof d[k]!=='string'||(d[k] as string).length>2000)return NextResponse.json({error:'Campo inválido: '+k},{status:400});
+ const professionalId=d.professional_id===null||d.professional_id===undefined?null:Number(d.professional_id);
+ if(professionalId!==null&&(!Number.isSafeInteger(professionalId)||professionalId<1))return NextResponse.json({error:'Profesional inválido'},{status:400});
  try{
-  const r=await pool.query('INSERT INTO patient_session_notes(patient_id,session_date,treatment,observations,next_appointment) VALUES($1,$2,$3,$4,$5) RETURNING id',[id,date,d.treatment,d.observations,d.next_appointment]);
+  if(professionalId!==null){const p=await pool.query('SELECT id FROM professionals WHERE id=$1 AND active=TRUE',[professionalId]);if(!p.rowCount)return NextResponse.json({error:'Profesional no disponible'},{status:400})}
+  const r=await pool.query('INSERT INTO patient_session_notes(patient_id,session_date,treatment,observations,next_appointment,professional_id) VALUES($1,$2,$3,$4,$5,$6) RETURNING id',[id,date,d.treatment,d.observations,d.next_appointment,professionalId]);
   return NextResponse.json({ok:true,id:r.rows[0].id},{status:201,headers:{'Cache-Control':'no-store'}});
  }catch(e){console.error('patient note save failed',e);return NextResponse.json({error:'No se pudo registrar la sesión'},{status:500})}
 }
