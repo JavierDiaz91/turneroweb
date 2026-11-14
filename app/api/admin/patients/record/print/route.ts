@@ -43,7 +43,7 @@ export async function GET(req:NextRequest){
   h1{font:34px Georgia,serif;letter-spacing:4px;margin:0}
   header p{letter-spacing:2px;margin:2px 0}
   header strong{font-size:10px}
-  .issued{font-size:11px;margin:0 0 8px}
+  .issued{font-size:11px;margin:0 0 8px}\n  .print-running-header{display:none}
   h2{font:19px Georgia,serif;border-bottom:1px solid #d8e2d7;padding-bottom:5px;margin:0 0 9px}
   h3{font-size:13px;margin:0 0 8px}
   section{background:#fff;padding:12px 16px;margin:10px 0;border:1px solid #d8e2d7;border-radius:8px}
@@ -57,7 +57,7 @@ export async function GET(req:NextRequest){
   .actions{position:sticky;top:0;background:#f7f5f0;padding:12px;text-align:center}
   .actions button{padding:12px 20px;border:0;border-radius:8px;background:#5c8067;color:white;cursor:pointer;font-size:15px}
   @media print{
-    .actions{display:none!important}
+    .actions{display:none!important}\n    .print-running-header{display:flex;position:fixed;top:-15mm;left:0;right:0;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid #b7c9b9;padding:0 0 4mm;background:#fff;color:#294334;font-size:10px}\n    .print-running-header strong{font:700 15px Georgia,serif;letter-spacing:2px}\n    .print-running-header span{font-size:10px;text-align:right}\n    header{display:none}
     body{background:#fff;padding:0;max-width:none;font-size:11px;line-height:1.28;color:#294334}
     header{padding:0 0 6px;margin:0 0 6px}
     h1{font-size:25px;letter-spacing:3px}
@@ -69,11 +69,11 @@ export async function GET(req:NextRequest){
     h3{font-size:10px;margin:0 0 3px;break-after:avoid}
     .fields{gap:6px 14px}
     .field small{font-size:10px;margin:0 0 2px;color:#365c43;font-weight:700}
-    .visit{padding:9px 0;break-inside:avoid;page-break-inside:avoid;overflow-wrap:anywhere}\n    .visit-heading{margin-bottom:4px}.visit-date{font-size:8px}.visit-heading h3{font-size:12px;margin:2px 0}.consultation-details{gap:6px}.professional-panel{margin-top:6px;padding-top:6px;gap:10px}.professional-label{font-size:10px;margin-bottom:3px;font-weight:700}.professional-name{font-size:13px;line-height:1.3}.professional-meta{font-size:10px;line-height:1.3;margin-top:2px}.professional-signature{width:35%;max-width:160px}.signature-line{height:23px}.professional-signature span{font-size:8px;margin-top:3px}
+    .visit{padding:12px 8px;break-inside:avoid;page-break-inside:avoid;overflow-wrap:anywhere;border-bottom:1px solid #b9cdbd}\n    .visit:nth-of-type(even){background:#f6f9f6}\n    .visit-heading{border-left:3px solid #6c9277;padding-left:8px}\n    .visit-heading{margin-bottom:4px}.visit-date{font-size:8px}.visit-heading h3{font-size:12px;margin:2px 0}.consultation-details{gap:6px}.professional-panel{margin-top:9px;padding-top:9px;gap:10px}.professional-label{font-size:10px;margin-bottom:3px;font-weight:700}.professional-name{font-size:13px;line-height:1.3}.professional-meta{font-size:10px;line-height:1.3;margin-top:2px}.professional-signature{width:35%;max-width:160px}.signature-line{height:30px}.professional-signature span{font-size:8px;margin-top:3px}
     .visit .field{margin:4px 0}
-    footer{margin-top:10px;padding-top:7px;font-size:9px}\n    @page{size:A4;margin:12mm 13mm}
+    footer{margin-top:10px;padding-top:7px;font-size:9px}\n    @page{size:A4;margin:23mm 13mm 13mm}
   }
-  </style></head><body><div class="actions"><button onclick="window.print()">Imprimir / Guardar como PDF</button></div><header><h1>RENASER</h1><p>MASAJES</p><strong>FICHA PRIVADA DEL PACIENTE</strong></header><p class="issued">Emitida el ${escapeHtml(issued)}</p>${identity}${cabinet}${personal}${health}${prefs}<section><h2>Historial de consultas (${notes.length})</h2>${visits}</section><footer>Documento confidencial · Uso exclusivo del gabinete RENASER</footer></body></html>`;
+  </style></head><body><div class="print-running-header"><strong>RENASER · MASAJES</strong><span>Ficha privada · ${escapeHtml(patient.full_name)}</span></div><div class="actions"><button onclick="window.print()">Imprimir / Guardar como PDF</button></div><header><h1>RENASER</h1><p>MASAJES</p><strong>FICHA PRIVADA DEL PACIENTE</strong></header><p class="issued">Emitida el ${escapeHtml(issued)}</p>${identity}${cabinet}${personal}${health}${prefs}<section><h2>Historial de consultas (${notes.length})</h2>${visits}</section><footer>Documento confidencial · Uso exclusivo del gabinete RENASER</footer></body></html>`;
   return new NextResponse(html,{headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff','X-Robots-Tag':'noindex, nofollow','Content-Security-Policy':"default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"}});
  }catch(e){console.error('patient print failed',e);return NextResponse.json({error:'No se pudo generar la ficha imprimible'},{status:500})}
 }
