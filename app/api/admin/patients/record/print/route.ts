@@ -34,17 +34,51 @@ export async function GET(req:NextRequest){
   const visits=notes.length?notes.map((note:{session_date:unknown;treatment:string;observations:string;next_appointment:string;professional_name:string|null;specialty:string|null;license_number:string|null})=>'<article class="visit"><h3>'+escapeHtml(date(note.session_date))+' · '+escapeHtml(note.treatment||'Sin especificar')+'</h3>'+field('Profesional responsable',note.professional_name||'Sin asignar')+(note.specialty?field('Especialidad',note.specialty):'')+(note.license_number?field('Matrícula',note.license_number):'')+field('Observaciones',note.observations)+field('Próximo turno / indicaciones',note.next_appointment)+'</article>').join(''):'<p>Sin consultas documentadas.</p>';
   const issued=new Intl.DateTimeFormat('es-AR',{timeZone:'America/Argentina/Buenos_Aires',dateStyle:'long'}).format(new Date());
   const last=notes[0];const latestHtml=last?'<article class="visit"><h3>'+escapeHtml(date(last.session_date))+' · '+escapeHtml(last.treatment||'Sin especificar')+'</h3>'+field('Profesional responsable',last.professional_name||'Sin asignar')+(last.specialty?field('Especialidad',last.specialty):'')+(last.license_number?field('Matrícula',last.license_number):'')+field('Observaciones',last.observations)+field('Próximo turno / indicaciones',last.next_appointment)+'</article>':'<p>Sin consultas documentadas.</p>';
+  const signatureProfessional=notes.find((note:{professional_name:string|null})=>note.professional_name)?.professional_name||'';
   const cabinet=section('Gabinete',field('Nombre comercial',business.business_name)+field('Dirección / localidad',business.address)+field('Teléfono',business.phone));
   const html=`<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ficha RENASER - ${escapeHtml(patient.full_name)}</title><style>
-  @page{size:A4;margin:12mm}*{box-sizing:border-box}body{font:14px Arial,sans-serif;color:#294334;max-width:850px;margin:0 auto;padding:22px;background:#f7f5f0}
-  header{text-align:center;border-bottom:2px solid #b7c9b9;padding:10px 0 20px;margin-bottom:24px}h1{font:42px Georgia,serif;letter-spacing:5px;margin:0}header p{letter-spacing:3px;margin:5px}h2{font:22px Georgia,serif;border-bottom:1px solid #d8e2d7;padding-bottom:8px}h3{font-size:15px}
-  section{background:#fff;padding:16px 20px;margin:14px 0;border:1px solid #d8e2d7;border-radius:10px;break-inside:avoid}
-  .fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field{overflow-wrap:anywhere}.field small{display:block;color:#6c8071;margin-bottom:4px}
-  .visit{border-bottom:1px solid #d8e2d7;padding:12px 0;break-inside:avoid}.visit .field{margin:10px 0}.visit:last-child{border:0}
-   .signature{text-align:right;margin-top:30px;font-size:12px} @media print{.actions{display:none!important}} footer{border-top:1px solid #d8e2d7;padding-top:12px;margin-top:22px;color:#6c8071;font-size:11px;text-align:center}
-  .actions{position:sticky;top:0;background:#f7f5f0;padding:12px;text-align:center}.actions button{padding:12px 20px;border:0;border-radius:8px;background:#5c8067;color:white;cursor:pointer;font-size:15px}
-  @media print{body{background:white;padding:0;font-size:12px;max-width:none}header{padding:0 0 10px;margin-bottom:12px}h1{font-size:30px}header p{margin:2px}section{padding:8px 12px;margin:6px 0;border-radius:0;break-inside:avoid}h2{font-size:16px;margin:0 0 6px;padding-bottom:4px}.fields{gap:8px}.visit{padding:6px 0}h2,.visit{break-after:avoid}footer{margin-top:10px;padding-top:8px}}
-  </style></head><body><div class="actions"><button onclick="window.print()">Imprimir / Guardar como PDF</button></div><header><h1>RENASER</h1><p>MASAJES</p><strong>FICHA PRIVADA DEL PACIENTE</strong></header><p>Emitida el ${escapeHtml(issued)}</p>${cabinet}${personal}${health}${prefs}${notes.length>1?`<section><h2>Última consulta (resumen)</h2>${latestHtml}</section>`:""}<section><h2>Historial de consultas (${notes.length})</h2>${visits}</section><div class="signature">Firma y aclaración del profesional: __________________________________</div><footer>Documento confidencial · Uso exclusivo del gabinete RENASER</footer></body></html>`;
+  @page{size:A4;margin:11mm 12mm}
+  *{box-sizing:border-box}
+  body{font:13px/1.35 Arial,sans-serif;color:#294334;max-width:850px;margin:0 auto;padding:20px;background:#f7f5f0}
+  header{text-align:center;border-bottom:1px solid #b7c9b9;padding:8px 0 12px;margin-bottom:12px}
+  h1{font:34px Georgia,serif;letter-spacing:4px;margin:0}
+  header p{letter-spacing:2px;margin:2px 0}
+  header strong{font-size:10px}
+  .issued{font-size:11px;margin:0 0 8px}
+  h2{font:19px Georgia,serif;border-bottom:1px solid #d8e2d7;padding-bottom:5px;margin:0 0 9px}
+  h3{font-size:13px;margin:0 0 8px}
+  section{background:#fff;padding:12px 16px;margin:10px 0;border:1px solid #d8e2d7;border-radius:8px}
+  .fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px}
+  .field{overflow-wrap:anywhere}
+  .field small{display:block;color:#6c8071;font-size:11px;margin-bottom:1px}
+  .visit{border-bottom:1px solid #d8e2d7;padding:9px 0;break-inside:avoid;page-break-inside:avoid}
+  .visit .field{margin:5px 0}
+  .visit:last-child{border:0}
+  .signature{margin-top:20px;text-align:right;font-size:11px;break-inside:avoid}
+  .signature-name{font-weight:600;margin-bottom:4px}
+  footer{border-top:1px solid #d8e2d7;padding-top:8px;margin-top:12px;color:#6c8071;font-size:10px;text-align:center}
+  .actions{position:sticky;top:0;background:#f7f5f0;padding:12px;text-align:center}
+  .actions button{padding:12px 20px;border:0;border-radius:8px;background:#5c8067;color:white;cursor:pointer;font-size:15px}
+  @media print{
+    .actions{display:none!important}
+    body{background:#fff;padding:0;max-width:none;font-size:10px;line-height:1.2;color:#294334}
+    header{padding:0 0 6px;margin:0 0 6px}
+    h1{font-size:25px;letter-spacing:3px}
+    header p{font-size:9px;margin:0}
+    header strong{font-size:8px}
+    .issued{font-size:9px;margin:0 0 5px}
+    section{padding:6px 9px;margin:4px 0;border-radius:0;break-inside:auto}
+    h2{font-size:13px;margin:0 0 4px;padding-bottom:3px;break-after:avoid;page-break-after:avoid}
+    h3{font-size:10px;margin:0 0 3px;break-after:avoid}
+    .fields{gap:3px 12px}
+    .field small{font-size:8px;margin:0}
+    .visit{padding:4px 0;break-inside:avoid;page-break-inside:avoid}
+    .visit .field{margin:2px 0}
+    .signature{margin-top:10px;font-size:9px}
+    .signature-name{margin-bottom:2px}
+    footer{margin-top:7px;padding-top:5px;font-size:8px}
+  }
+  </style></head><body><div class="actions"><button onclick="window.print()">Imprimir / Guardar como PDF</button></div><header><h1>RENASER</h1><p>MASAJES</p><strong>FICHA PRIVADA DEL PACIENTE</strong></header><p class="issued">Emitida el ${escapeHtml(issued)}</p>${cabinet}${personal}${health}${prefs}<section><h2>Historial de consultas (${notes.length})</h2>${visits}</section><div class="signature">${signatureProfessional?'<div class="signature-name">'+escapeHtml(signatureProfessional)+'</div>':''}Firma y aclaración del profesional: __________________________________</div><footer>Documento confidencial · Uso exclusivo del gabinete RENASER</footer></body></html>`;
   return new NextResponse(html,{headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff','X-Robots-Tag':'noindex, nofollow','Content-Security-Policy':"default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"}});
  }catch(e){console.error('patient print failed',e);return NextResponse.json({error:'No se pudo generar la ficha imprimible'},{status:500})}
 }
